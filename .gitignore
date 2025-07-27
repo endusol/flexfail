@@ -1,0 +1,53 @@
+# Bytecode / cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Compiled
+*.so
+*.dll
+*.dylib
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Poetry
+poetry.lock
+*.venv/
+.venv/
+.env
+.env.*
+
+# VSCode
+.vscode/
+.code-workspace
+
+# JetBrains
+.idea/
+*.iml
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# Test / Coverage
+.coverage
+coverage.xml
+.cache/
+.tox/
+.nox/
+htmlcov/
+pytest_cache/
+*.log
+
+# Misc
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+# Virtualenv (if created manually)
+venv/
