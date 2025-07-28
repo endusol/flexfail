@@ -1,7 +1,7 @@
-[project]
+[tool.poetry]
 name = "flexfail"
 version = "0.1.0"
-description = ""
+description = "Flexible failures collector with different collect strategies."
 authors = [{name = "endusol",email = "pdima.endusol@gmail.com"}]
 readme = "README.md"
 license = "MIT"
