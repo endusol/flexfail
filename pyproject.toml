@@ -1,4 +1,4 @@
-[tool.poetry]
+[project]
 name = "flexfail"
 version = "0.1.0"
 description = "Flexible failures collector with different collect strategies."
