@@ -3,8 +3,9 @@ Error collector and error collector strategies.
 """
 
 import enum
+import threading
 import typing as t
-from ._exceptions import FlexFailException, FailFastException
+from .exceptions import FlexFailException, FailFastException
 
 
 class ErrorCollectorStrategy(enum.StrEnum):
@@ -31,6 +32,7 @@ class ErrorCollector:
         self._strategy = strategy
         self._fn = fn
         self._errors = []
+        self._lock = threading.Lock()
 
     # Keep this name, not `__call__` so the doc-string is visible on hover.
     def call(self, *args, **kwargs):
@@ -46,7 +48,8 @@ class ErrorCollector:
             return self._fn(*args, **kwargs)
         except FlexFailException as e:
             if self._strategy in (ErrorCollectorStrategy.fail_fast, ErrorCollectorStrategy.try_all):
-                self._errors.append(e)
+                with self._lock:
+                    self._errors.append(e)
             if self._strategy is ErrorCollectorStrategy.fail_fast:
                 raise FailFastException('Failed fast!')
 
