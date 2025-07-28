@@ -9,4 +9,4 @@ Main components:
 - ``flexfail.ErrorCollectorStrategy``: defines available modes/strategies.
 - ``flexfail.exceptions``: FlexFail exceptions.
 """
-from _error_collector import ErrorCollector, ErrorCollectorStrategy
+from ._error_collector import ErrorCollector, ErrorCollectorStrategy
