@@ -1,16 +1,49 @@
+[badge--license]: https://img.shields.io/badge/©MIT-d19a04.svg?style=for-the-badge
+[href--license]: https://github.com/endusol/flexfail?tab=MIT-1-ov-file
+
+[badge--python]: https://img.shields.io/badge/Python%203.9%2B-3060bb?logo=python&style=for-the-badge&logoColor=white
+[href--python]: https://www.python.org/
+
+[badge--pypi]: https://img.shields.io/badge/FLEXFAIL-352239.svg?logo=pypi&style=for-the-badge&logoColor=white
+[href--pypi]: https://pypi.org/project/flexfail/
+
+[badge--pyest]: https://img.shields.io/badge/TESTS-PASSING-507323?style=for-the-badge&logo=pytest&logoColor=white
+[badge--pytest]: https://img.shields.io/badge/dynamic/json?&style=for-the-badge&logo=pytest&logoColor=white&label=Tests&color=131313&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fendusol%2Fflexfail%2Factions%2Fruns&query=%24.workflow_runs%5B0%5D.conclusion
+[href--pytest]: https://github.com/endusol/flexfail/actions/workflows/publish-pypi.yaml
+
+[badge--gh-actions]: https://img.shields.io/badge/dynamic/json?&style=for-the-badge&logo=githubactions&logoColor=white&label=Publish%20to%20PyPi&color=131313&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fendusol%2Fflexfail%2Factions%2Fruns&query=%24.workflow_runs%5B0%5D.conclusion
+[href--gh-actions]: https://github.com/endusol/flexfail/actions/workflows/publish-pypi.yaml
+
+[badge--gh-sponsors]:https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#ea4aaa
+[href--gh-sponsors]: https://github.com/endusol/flexfail/
+
+[badge--buy-me-a-coffee]: https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black
+[href--buy-me-a-coffee]: https://github.com/endusol/flexfail/
+
+[badge--ko-fi]: https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white
+[href--ko-fi]: https://github.com/endusol/flexfail/
+
 # flexfail
 
-[![PyPi](https://img.shields.io/badge/pypi-%23ececec.svg?logo=pypi)](https://pypi.org/project/flexfail/)
+[![badge--license]][href--license]
+[![badge--python]][href--python]
+[![badge--pypi]][href--pypi]
 
-[![Tests](https://github.com/endusol/flexfail/actions/workflows/publish-pypi.yaml/badge.svg)](https://github.com/endusol/flexfail/actions/workflows/publish-pypi.yaml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/endusol/flexfail?tab=MIT-1-ov-file)
-[![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
-![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
+[![badge--pytest]][href--pytest]
+[![badge--gh-actions]][href--gh-actions]
 
 **Flexible failures collector with different collecting strategies.**
 
 `flexfail` provides a consistent and reusable way to collect, and handle failures.
 Useful in data processing, form validation, and other contexts where soft-failing logic is needed.
+
+---
+
+## Would like to support?
+
+[![badge--gh-sponsors]][href--gh-sponsors]
+[![badge--buy-me-a-coffee]][href--buy-me-a-coffee]
+[![badge--ko-fi]][href--ko-fi]
 
 ---
 
@@ -214,12 +247,3 @@ collector = ErrorCollector(strategy=ErrorCollectorStrategy.skip, autowrap=False)
 ```
 
 This will lead to only `FlexFailException` is caught and any other exceptions are raised as usual.
-
----
-
-## Would like to support?
-
-![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)
-![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)
-![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)
-
