@@ -1,5 +1,12 @@
 # flexfail
 
+[![PyPi](https://img.shields.io/badge/pypi-%23ececec.svg?logo=pypi)](https://pypi.org/project/flexfail/)
+
+[![Tests](https://github.com/endusol/flexfail/actions/workflows/publish-pypi.yaml/badge.svg)](https://github.com/endusol/flexfail/actions/workflows/publish-pypi.yaml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/endusol/flexfail?tab=MIT-1-ov-file)
+[![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
+![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
+
 **Flexible failures collector with different collecting strategies.**
 
 `flexfail` provides a consistent and reusable way to collect, and handle failures.
@@ -32,96 +39,187 @@ pip install flexfail
 
 ---
 
-## Examples
+## Usage approaches
 
-### Prerequisites before strategies overview
+Below are examples on how to use the `flexfail` using different approaches.
 
-Below is a simple example of how `flexfail` can be used to wrap a function and
-handle failures using different strategies:
+### Imperative (with context protocol)
 
 ```python
 from flexfail import ErrorCollector, ErrorCollectorStrategy
-from flexfail.exceptions import FlexFailException, FailFastException
 
 
-# Let's assume, negative values are impossible to process, as the values are checkouts, for instance.
-checkouts = [10, 20, -30, -40, 50, 'spam']
+data = [10, 20, -30, -44, 50, 'spam']
+collector = ErrorCollector(ErrorCollectorStrategy.try_all)
 
+for value in data:
+    is_number = isinstance(value, (int, float))
+    with collector:  # Just use context to collect errors. As shown here.
+        assert is_number, f'Value `{value}` is not a number!'
+        assert value >= 0, f'Value `{value}` is below zero!'
+    with collector:  # And here.
+        if is_number:
+            assert value % 10 == 0, f'Value `{value}` is not divisible by 10!'
 
-def process_check(value: float):
-    if not isinstance(value, (float, int)):
-        raise FlexFailException(data={'description': 'Checkout value is not a number!', 'value': value})
-    if value < 0:
-        raise FlexFailException(data={'description': 'Checkout value was below zero!', 'value': value})
-    print(f'Check with amount {value}$ was successfully processed!')
-
-
-def process_all_with_strategy(strategy: ErrorCollectorStrategy):
-    error_collector = ErrorCollector(process_check, strategy)
-    try:
-        for _ in checkouts:
-            error_collector.call(_)
-    except FailFastException:
-        pass
-    print(f'Collected errors:')
-    for error in error_collector.errors:
-        print(error.data)
+print(f'Collected {len(collector.errors)} errors:')
+for err in collector.errors:
+    print(err.data)
 ```
 
-Please, note, only `FlexFailException` is safe to raise. If you need any other exception to be collected, just wrap it,
-using the `data`. You'll be able to access it later. Example:
+Results into:
+
+```txt
+Collected 4 errors:
+Value `-30` is below zero!
+Value `-44` is below zero!
+Value `-44` is not times 10!
+Value `spam` is not a number!
+```
+
+### Declarative (with decorators)
 
 ```python
-raise FlexFailException(data={'my_wrapped_exception': RuntimeError('Some custom error!')})
+from flexfail import ErrorCollector, ErrorCollectorStrategy
+
+
+error_collector = ErrorCollector(ErrorCollectorStrategy.try_all)
+
+
+@error_collector  # Just decorate callables with a collector object. As shown here.
+def check_positive_number(value):
+    assert isinstance(value, (int, float)), f'Value `{value}` is not a number!'
+    assert value >= 0, f'Value `{value}` is below zero!'
+
+
+@error_collector  # And here.
+def check_divisible_by_10(value):
+    if isinstance(value, (int, float)):
+        assert value % 10 == 0, f'Value `{value}` is not divisible by 10!'
+
+
+data = [10, 20, -30, -44, 50, 'spam']
+for value in data:
+    check_positive_number(value)
+    check_divisible_by_10(value)
+
+print(f'Collected {len(error_collector.errors)} errors:')
+for err in error_collector.errors:
+    print(err.data)
 ```
+
+Results into:
+
+```txt
+Collected 4 errors:
+Value `-30` is below zero!
+Value `-44` is below zero!
+Value `-44` is not times 10!
+Value `spam` is not a number!
+```
+
+## Strategies overview
+
+Below is a simple examples of how `flexfail` collects errors using different strategies.
 
 ### Strategy `skip`
 
 Force bypass all the errors and not even collect them.
 
 ```python
-process_all_with_strategy(ErrorCollectorStrategy.skip)
+from flexfail import ErrorCollector, ErrorCollectorStrategy
+from flexfail.exceptions import FailFastException
+
+
+error_collector = ErrorCollector(ErrorCollectorStrategy.skip)
+
+
+@error_collector
+def process(value):
+    assert isinstance(value, (int, float)), f'Value `{value}` is not a number!'
+    assert _ >= 0,  f'Value `{value}` is below zero!'
+    print(f'Value `{value}` was successfully processed!')
+    return value
+
+data = [10, 20, -30, -44, 50, 'spam']
+processed_data = []
+try:
+    for _ in data:
+        processed_value = process(_)
+        if processed_value:
+            processed_data.append(processed_value)
+except FailFastException:
+    pass
+
+
+print(f'Collected {len(error_collector.errors)} errors:')
+for _ in error_collector.errors:
+    print(_.data)
+print(f'Processed data: {processed_data}')
 ```
 
 Results into:
 
 ```txt
-Check with amount 10$ was successfully processed!
-Check with amount 20$ was successfully processed!
-Check with amount 50$ was successfully processed!
-Collected errors:
+Value `10` was successfully processed!
+Value `20` was successfully processed!
+Value `50` was successfully processed!
+Collected 0 errors:
+Processed data: [10, 20, 50]
 ```
 
 ### Strategy `fail_fast`
 
 Raise on first error occurs and collect only it.
 
-```python
-process_all_with_strategy(ErrorCollectorStrategy.fail_fast)
-```
-
-Results into:
+Replace strategy from previous example to `ErrorCollectorStrategy.fail_fast`.
+The same example with new strategy results into:
 
 ```txt
-Check with amount 10$ was successfully processed!
-Check with amount 20$ was successfully processed!
-Collected errors:
-{'description': 'Checkout value was below zero!', 'value': -30}
+Value `10` was successfully processed!
+Value `20` was successfully processed!
+Collected 1 errors:
+Value `-30` is below zero!
+Processed data: [10, 20]
 ```
 
 ### Strategy `try_all`
 
 Collect all the errors.
 
-```python
-process_all_with_strategy(ErrorCollectorStrategy.try_all)
-```
-
-Results into:
+Replace strategy from previous example to `ErrorCollectorStrategy.try_all`.
+The same example with new strategy results into:
 
 ```txt
-Collected errors:
-{'description': 'Checkout value was below zero!', 'value': -30}
-{'description': 'Checkout value was below zero!', 'value': -40}
-{'description': 'Checkout value is not a number!', 'value': 'spam'}
+Value `10` was successfully processed!
+Value `20` was successfully processed!
+Value `50` was successfully processed!
+Collected 3 errors:
+Value `-30` is below zero!
+Value `-44` is below zero!
+Value `spam` is not a number!
+Processed data: [10, 20, 50]
 ```
+
+## Autowrap
+
+Please, note, by default collectors wraps any caught exception into the
+`flexfail.exceptions.FlexFailException` as the `data` property.
+
+If you want to disable this behavior, just set `autowrap` to `False` on collector initialise:
+
+```python
+from flexfail import ErrorCollector, ErrorCollectorStrategy
+
+collector = ErrorCollector(strategy=ErrorCollectorStrategy.skip, autowrap=False)
+```
+
+This will lead to only `FlexFailException` is caught and any other exceptions are raised as usual.
+
+---
+
+## Would like to support?
+
+![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)
+![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)
+![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)
+
