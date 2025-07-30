@@ -8,7 +8,7 @@ class FlexFailException(RuntimeError):
     :param data: data to be kept by exception.
     Useful when need to return some information about the failure from the callable.
     """
-    def __init__(self, data):
+    def __init__(self, data = None):
         self.data = data
 
 
