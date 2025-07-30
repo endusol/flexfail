@@ -25,6 +25,12 @@
 
 # flexfail
 
+[![codecov](
+https://codecov.io/gh/endusol/flexfail/branch/main/graph/badge.svg
+)](
+https://codecov.io/gh/endusol/flexfail
+)
+
 [![badge--license]][href--license]
 [![badge--python]][href--python]
 [![badge--pypi]][href--pypi]
@@ -44,6 +50,8 @@ Useful in data processing, form validation, and other contexts where soft-failin
 [![badge--gh-sponsors]][href--gh-sponsors]
 [![badge--buy-me-a-coffee]][href--buy-me-a-coffee]
 [![badge--ko-fi]][href--ko-fi]
+
+`TODO: provide correct links to the badges above`
 
 ---
 
