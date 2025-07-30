@@ -10,10 +10,3 @@ def test_multiple_collectors_are_isolated():
     error_collector_2 = ErrorCollector(strategy=ErrorCollectorStrategy.fail_fast)
     assert error_collector_1.errors is not error_collector_2.errors
     assert error_collector_1._lock is not error_collector_2._lock
-
-
-def test_test_gh_actions():
-    """
-    Fails
-    """
-    assert 1 == 2
