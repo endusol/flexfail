@@ -34,7 +34,7 @@ class ErrorCollector:
     def __init__(self, strategy: ErrorCollectorStrategy, autowrap: bool = True):
         self._strategy = strategy
         self._errors = []
-        self._lock = threading.Lock()
+        self._lock = threading.RLock()
         self._autowrap = autowrap
 
     def __enter__(self):
