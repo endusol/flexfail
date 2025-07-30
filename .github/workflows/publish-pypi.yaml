@@ -43,10 +43,6 @@ jobs:
         flags: unittests
         name: codecov-flexfail
 
-    - name: Publish to PyPI (echo only)
+    - name: Publish to PyPI
       if: success()
-      run: echo "All tests passed - would publish to PyPI here ^w^"
-
-#    - name: Publish to PyPI
-#      if: success()
-#      run: poetry publish --build --username __token__ --password ${{ secrets.PYPI_TOKEN }}
+      run: poetry publish --build --username __token__ --password ${{ secrets.PYPI_TOKEN }}

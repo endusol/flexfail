@@ -7,9 +7,11 @@
 [badge--pypi]: https://img.shields.io/badge/FLEXFAIL-352239.svg?logo=pypi&style=for-the-badge&logoColor=white
 [href--pypi]: https://pypi.org/project/flexfail/
 
-[badge--pyest]: https://img.shields.io/badge/TESTS-PASSING-507323?style=for-the-badge&logo=pytest&logoColor=white
-[badge--pytest]: https://img.shields.io/badge/dynamic/json?&style=for-the-badge&logo=pytest&logoColor=white&label=Tests&color=131313&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fendusol%2Fflexfail%2Factions%2Fruns&query=%24.workflow_runs%5B0%5D.conclusion
-[href--pytest]: https://github.com/endusol/flexfail/actions/workflows/publish-pypi.yaml
+[badge--safety]: https://img.shields.io/badge/🛡%20Safety-131313?style=for-the-badge
+[href--safety]: https://data.safetycli.com/packages/pypi/flexfail/
+
+[badge--codecov]: https://img.shields.io/codecov/c/github/endusol/flexfail/main?logo=codecov&style=for-the-badge&logoColor=white
+[href--codecov]: https://app.codecov.io/github/endusol/flexfail/tree/main
 
 [badge--gh-actions]: https://img.shields.io/badge/dynamic/json?&style=for-the-badge&logo=githubactions&logoColor=white&label=Publish%20to%20PyPi&color=131313&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fendusol%2Fflexfail%2Factions%2Fruns&query=%24.workflow_runs%5B0%5D.conclusion
 [href--gh-actions]: https://github.com/endusol/flexfail/actions/workflows/publish-pypi.yaml
@@ -25,18 +27,14 @@
 
 # flexfail
 
-[![codecov](
-https://codecov.io/gh/endusol/flexfail/branch/main/graph/badge.svg
-)](
-https://codecov.io/gh/endusol/flexfail
-)
-
 [![badge--license]][href--license]
 [![badge--python]][href--python]
 [![badge--pypi]][href--pypi]
 
-[![badge--pytest]][href--pytest]
+[![badge--safety]][href--safety]
+[![badge--codecov]][href--codecov]
 [![badge--gh-actions]][href--gh-actions]
+
 
 **Flexible failures collector with different collecting strategies.**
 
