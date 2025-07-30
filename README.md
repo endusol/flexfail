@@ -20,10 +20,10 @@
 [href--gh-sponsors]: https://github.com/endusol/flexfail/
 
 [badge--buy-me-a-coffee]: https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black
-[href--buy-me-a-coffee]: https://github.com/endusol/flexfail/
+[href--buy-me-a-coffee]: https://buymeacoffee.com/endusol
 
 [badge--ko-fi]: https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white
-[href--ko-fi]: https://github.com/endusol/flexfail/
+[href--ko-fi]: https://ko-fi.com/endusol
 
 # flexfail
 
@@ -45,11 +45,8 @@ Useful in data processing, form validation, and other contexts where soft-failin
 
 ## Would like to support?
 
-[![badge--gh-sponsors]][href--gh-sponsors]
 [![badge--buy-me-a-coffee]][href--buy-me-a-coffee]
 [![badge--ko-fi]][href--ko-fi]
-
-`TODO: provide correct links to the badges above`
 
 ---
 
