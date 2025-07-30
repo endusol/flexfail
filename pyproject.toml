@@ -1,6 +1,6 @@
 [project]
 name = "flexfail"
-version = "1.0.0"
+version = "2.0.0"
 description = "Flexible failures collector with different collect strategies."
 authors = [{name = "endusol",email = "pdima.endusol@gmail.com"}]
 readme = "README.md"
